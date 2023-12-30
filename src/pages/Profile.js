@@ -133,6 +133,7 @@ const Profile = () => {
                   width: "10vw",
                   aspectRatio: "1/1",
                   borderRadius: "50%",
+                  objectFit: "cover",
                 }}
                 src={newPhotoURL ? newPhotoURL : user?.photoURL}
                 alt={user?.email}

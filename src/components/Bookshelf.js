@@ -77,7 +77,11 @@ const Bookshelf = ({ collection, docId, bookList, shelfName }) => {
           {books.bookNames.map((bookName, index) => (
             <li key={index}>
               <Link to={`/${books.Ids[index]}`}>
-                <img src={books.imageLinks[index]} alt={bookName} />
+                <img
+                  className={classes.Imgs}
+                  src={books.imageLinks[index]}
+                  alt={bookName}
+                />
               </Link>
             </li>
           ))}

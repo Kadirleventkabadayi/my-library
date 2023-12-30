@@ -18,6 +18,7 @@
   border-radius: 50%;
   aspect-ratio: 1/1;
   referrerpolicy: "no-referrer";
+  object-fit: cover;
 }
 .userimgdiv h3 {
   padding: 20px;

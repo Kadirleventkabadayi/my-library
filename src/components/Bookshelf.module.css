@@ -51,3 +51,8 @@
   background-color: #1d5d9b;
   color: white;
 }
+.Imgs {
+  width: 6vw;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+}
