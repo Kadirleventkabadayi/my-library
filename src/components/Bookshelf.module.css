@@ -1,0 +1,53 @@
+/* Bookshelf.module.css */
+
+.bookshelfWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Yeni eklenen özellik: İtemları ortala */
+  margin-top: 20px; /* İstenirse boşluk ekleyebilirsiniz */
+}
+
+.bookshelfList {
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%; /* Genişliği 100% yaparak içerideki öğelerin tam ekranı kaplamasını sağlar */
+  max-width: 800px; /* İstenirse maksimum genişlik belirtilebilir */
+  margin: 5%; /* İçeriği yatayda ortala */
+}
+
+.bookshelfList ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.bookshelfList ul li {
+  margin-bottom: 10px;
+}
+
+.bookActions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.bookItem {
+  display: flex;
+  flex-direction: column;
+  margin: 2px;
+}
+.bookshelfButton {
+  background-color: white;
+  padding: 5px;
+  margin: 2px;
+  cursor: pointer;
+  border: 1px solid #1d5d9b;
+  color: #1d5d9b;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.bookshelfButton:hover {
+  background-color: #1d5d9b;
+  color: white;
+}

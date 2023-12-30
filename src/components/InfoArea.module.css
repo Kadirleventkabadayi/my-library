@@ -1,0 +1,78 @@
+.container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  padding-top: 4rem;
+  margin-inline: 15%;
+  height: 100vh;
+  position: relative;
+  width: 75vw;
+}
+
+.textInfo {
+  margin-right: 1rem;
+}
+
+.textInfo h1,
+span {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 92px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.textInfo p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 32px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.search-bar {
+  max-width: 100%; /* SearchBar'ın maksimum genişliği */
+}
+
+.imageContainer {
+  background-image: url("../assets/Group 48096402.svg");
+  background-size: cover; /* veya background-size'i ihtiyaca uygun ayarlayın */
+  height: 532px;
+  width: 494px;
+}
+.vector {
+  background-image: url("../assets/Vector 402.svg");
+  background-size: cover; /* veya background-size'i ihtiyaca uygun ayarlayın */
+  position: absolute;
+  z-index: -1;
+  height: 18.64px;
+  width: 171px;
+  margin: 5rem;
+  margin-inline-start: 26rem;
+}
+.searchContainer {
+  display: flex;
+  align-items: baseline;
+  gap: 1%;
+}
+
+.searchContainer li {
+  margin-bottom: 8px;
+  padding: 8px;
+  /* background-color: #fff; */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.searchContainer li:hover {
+  background-color: #3089e2;
+  color: #fff;
+}
+
+.selectedFilter {
+  background-color: #1d5d9b; /* Seçili filtre rengi */
+  color: #fff; /* Yazı rengi */
+}

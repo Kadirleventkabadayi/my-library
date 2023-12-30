@@ -1,0 +1,132 @@
+.base {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  display: flex;
+  justify-content: flex-start;
+  margin: 2%;
+  margin-inline: 10%;
+  align-items: flex-start;
+  gap: 5%;
+  width: 75vw;
+}
+.book {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-direction: column;
+  padding-inline: 2%;
+  width: 50vw;
+}
+.imgdiv {
+  width: 10vw;
+}
+.imgdiv img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.addlist {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+.addlist h4 {
+  cursor: pointer;
+  border: 2px solid var(--grey, #7d7d7d);
+  border-radius: 16px;
+  padding: 1rem 1.5rem;
+  color: var(--grey, #7d7d7d);
+  display: flex;
+}
+
+.addlist :hover {
+  color: #1d5d9b;
+  border-color: #1d5d9b;
+}
+
+.BookTitle {
+  font-size: 36px;
+  color: #000;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  margin-bottom: 1%;
+}
+.BookTitle p {
+  font-size: 16px;
+  margin: 10px;
+}
+.BookInfo {
+  color: var(--grey, #7d7d7d);
+  margin: 0;
+  margin-bottom: 1%;
+}
+.description {
+  margin-bottom: 1%;
+  color: var(--grey, #7d7d7d);
+}
+.commentdiv {
+  display: flex;
+  width: 75vw;
+  height: 25vh;
+  position: relative;
+  border-radius: 16px;
+}
+.commentdiv form {
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+.commentdiv textarea {
+  text-align: left;
+  border-radius: 16px;
+  border: 1px solid #dedede;
+  background: #fcfcfc;
+  resize: none;
+  box-sizing: border-box;
+  width: 100%;
+  transition: border-color 0.3s ease;
+  font-size: 36px;
+}
+.commentdiv textarea:focus-visible {
+  border: 1px solid #747272;
+  border-color: #747272;
+}
+
+.commentdiv button {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #1d5d9b;
+  color: white;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+}
+.commentdiv button:hover {
+  background-color: #1d79d4;
+}
+.hoverIcon {
+  opacity: 0;
+  position: absolute;
+}
+
+.addlist h4:hover .hoverIcon {
+  opacity: 1;
+}
+.icon {
+  opacity: 1;
+}
+
+.addlist h4:hover .icon {
+  opacity: 0;
+}

@@ -1,0 +1,14 @@
+.resultsList {
+  width: 482px;
+  max-height: 300px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  margin-top: 1rem;
+  overflow-y: scroll;
+}
+.noResult {
+  display: none;
+}

@@ -1,0 +1,36 @@
+.searchBarContainer {
+  display: flex;
+  align-items: center;
+  width: 482px; /* Genişlik: 482px */
+  height: 72px; /* Yükseklik: 72px */
+  border: 1px solid #ccc;
+  border-radius: 16px; /* Yarı çap: (72px / 2) */
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 20px;
+  border: none;
+  font-size: 16px; /* Örneğin font boyutu: 16px */
+  outline: none;
+  border-top-left-radius: 36px; /* Sol üst köşe yuvarlaklığı */
+  border-bottom-left-radius: 36px; /* Sol alt köşe yuvarlaklığı */
+}
+
+.searchButton {
+  padding: 13px 35px;
+  border: none;
+  font-size: 16px;
+  background-color: #1d5d9b;
+  color: white;
+  cursor: pointer;
+  border-radius: 16px;
+  margin-inline-end: 10px;
+}
+
+.searchButton:hover {
+  background-color: #155181;
+  transform: scale(1.02);
+}

@@ -1,0 +1,50 @@
+/* LibraryPage.module.css */
+
+.libraryContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-block: 2%;
+}
+
+.libraryList {
+  display: flex;
+  justify-content: space-evenly;
+  width: 95vw;
+  margin-block: 2%;
+}
+
+.libraryListItem {
+  cursor: pointer;
+  width: 20%;
+  height: 5vh;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #1d5d9b;
+  color: #1d5d9b;
+  background-color: white;
+  transition: background-color 0.3s ease; /* Eklenen geçiş efekti */
+}
+
+.libraryListItem:hover {
+  color: white;
+  border-color: #2575c5;
+  background-color: #2575c5;
+}
+
+.libraryBookshelf {
+  width: 54%;
+  display: flex;
+  justify-content: center;
+}
+.libraryListItem.selected {
+  background-color: #1d5d9b; /* Seçili olan seçeneğin arka plan rengi */
+  color: white; /* Yazı rengini değiştir, isteğe bağlı */
+}
+.libraryListItem.selected:hover {
+  color: white;
+  border-color: #2575c5;
+  background-color: #2575c5;
+}

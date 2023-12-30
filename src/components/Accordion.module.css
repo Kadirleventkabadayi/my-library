@@ -1,0 +1,39 @@
+/* Accordion.module.css */
+.accordionItem {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.accordionTitle {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  min-width: 5vw;
+}
+
+.accordionContent {
+  padding: 16px;
+  background-color: #fff;
+}
+
+.accordionBtn {
+  font-size: 18px;
+}
+
+.accordionSearchTitle {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.accordionContent ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}

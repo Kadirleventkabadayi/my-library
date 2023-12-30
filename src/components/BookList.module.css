@@ -1,0 +1,56 @@
+.books {
+  background-color: #f1f1f1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.item {
+  width: 282px;
+  height: 454px;
+  display: flex;
+  background-color: white;
+  border-radius: 16px;
+}
+
+.item img {
+  border-radius: 16px;
+  width: 250px;
+  height: 275px;
+  object-fit: fill;
+  margin: 1rem;
+}
+
+.content {
+  margin-inline-start: 1rem;
+}
+.item h4 {
+  margin: 0 0 1rem 0;
+}
+
+.detailbtn {
+  margin-inline-start: 1rem;
+  width: 100%;
+  text-align: center;
+  width: 250px;
+  height: 48px;
+  border-radius: 16px;
+  color: #fff;
+  background-color: #1d5d9b;
+  cursor: pointer;
+}
+.detailbtn:hover {
+  background-color: #155181;
+  transform: scale(1.02);
+}
+
+.books h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pageDescription {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

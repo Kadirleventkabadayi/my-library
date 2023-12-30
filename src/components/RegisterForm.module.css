@@ -1,0 +1,90 @@
+.allForm {
+  height: 100vh;
+  width: 100vw;
+  padding-inline: 35vw;
+  padding-block-end: 15vh;
+  padding-block-start: 10vh;
+  background: linear-gradient(to right, #1d5d9b 50%, #fffef9 50%);
+}
+
+.container {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  flex: 2;
+  margin: 0 10px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-block-end: 5%;
+  width: 80%;
+  gap: 10px;
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #1d5d9b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+.googleBtn {
+  background-color: #f4d160;
+}
+.registerBtn {
+  width: 100%;
+  margin-top: 5%;
+}
+
+.formInfo {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 5%;
+}
+
+.formInfo p {
+  margin: 0px;
+}
+
+.formInfo h3 {
+  margin-top: 0px;
+}
+
+.form p {
+  width: 100%;
+}
+
+.leftAlign {
+  text-align: left;
+}
+
+.rightAlign {
+  text-align: right;
+  font-size: 13px;
+}
+
+.formInfo h1 {
+  font-size: 55px;
+  color: #1d5d9b;
+}

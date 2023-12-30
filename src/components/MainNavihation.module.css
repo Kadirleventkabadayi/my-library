@@ -1,0 +1,53 @@
+.header {
+  width: "100vw";
+  padding-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #ffffff;
+}
+
+.list {
+  display: flex;
+  gap: 3rem;
+  margin-right: 2rem;
+}
+
+.list a {
+  text-decoration: none;
+  color: #272727;
+}
+
+.list a:hover,
+.list a.active {
+  color: #1d5d9b;
+}
+.list a.library {
+  background: #1d5d9b;
+  border-radius: 16px;
+  padding: 0.5rem 1rem;
+  background-size: 130% 130%;
+  color: #ffffff;
+}
+
+.list a.library:hover {
+  background-size: 140% 140%;
+  background: #317bc5;
+}
+
+.logo {
+  background-image: url("../assets/logo.svg");
+  background-size: cover; /* veya background-size'i ihtiyaca uygun ayarlayın */
+  height: 36px;
+  width: 36px;
+  align-self: center;
+  z-index: -1;
+  margin-right: 1rem;
+  margin-left: 2rem;
+}
+.name {
+  text-decoration: none;
+  color: #1d5d9b;
+}
