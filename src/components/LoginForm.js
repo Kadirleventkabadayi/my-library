@@ -1,9 +1,10 @@
 import classes from "./LoginForm.module.css";
 import { useEffect, useState } from "react";
-import { auth, provider, login } from "../config/FireBase";
+import { auth, provider, login, db } from "../config/FireBase";
 import { signInWithPopup } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "./UserContex";
+import { addUserToStore } from "../utils/AddUsersToStore";
 
 function LoginForm() {
   const { user, setUser } = useUser();
@@ -44,6 +45,7 @@ function LoginForm() {
       auth.onAuthStateChanged((user) => {
         setUser(user);
         console.log("DENEME", user);
+        addUserToStore(db, "users", user.uid, user);
       });
       navigate("/");
       console.log("effect: ", user);

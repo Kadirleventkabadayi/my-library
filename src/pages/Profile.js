@@ -9,6 +9,10 @@ import {
 import { CheckEmailVerification } from "../utils/CheckEmailVerification";
 import { useUser } from "../components/UserContex";
 import Camera from "../assets/Camera.svg";
+import { db, storage } from "../config/FireBase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { checkStorage } from "../utils/CheckStorage";
+import { addUserToStore } from "../utils/AddUsersToStore";
 
 const Profile = () => {
   const { user, setUser } = useUser();
@@ -16,32 +20,76 @@ const Profile = () => {
   const [newPhotoURL, setNewPhotoURL] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
+  const [file, setFile] = useState(null);
   const auth = getAuth();
 
   useEffect(() => {
-    // Firebase Authentication tarafından sağlanan kullanıcı nesnesini al
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       setUser(user);
       console.log("BURDA NE GELDİ", user);
+
+      if (user) {
+        const userPhotoRef = ref(storage, `/UserImages/${user.uid}`);
+        const photoURL = await checkStorage(userPhotoRef);
+        setNewPhotoURL(photoURL);
+      }
     });
+
     return () => {
       unsubscribe();
     };
   }, [auth]);
+
+  const uploadPhoto = async () => {
+    if (file == null) return;
+
+    const imgRef = ref(storage, `/UserImages/${auth.currentUser.uid}`);
+
+    try {
+      await uploadBytes(imgRef, file);
+      alert("Is Done!");
+      const photoURL = await getDownloadURL(imgRef);
+      setNewPhotoURL(photoURL);
+      if (auth.currentUser) {
+        if (checkLengthName(newDisplayName)) {
+          updateProfile(auth.currentUser, {
+            photoURL: photoURL,
+          })
+            .then(() => {
+              setUser(auth.currentUser);
+              console.log("Kullanıcı profil bilgileri güncellendi");
+              addUserToStore(db, "users", user.uid, user);
+              // Inputları temizle
+              setNewDisplayName("");
+            })
+            .catch((error) => {
+              console.error(
+                "Kullanıcı profil bilgileri güncellenirken bir hata oluştu",
+                error
+              );
+            });
+        } else {
+          alert("İsimedki karakter sayısı 32 den fazla olamaz!");
+        }
+      }
+    } catch (error) {
+      console.error("Upload error:", error.message);
+    }
+  };
 
   const handleUpdateProfile = () => {
     if (auth.currentUser) {
       if (checkLengthName(newDisplayName)) {
         updateProfile(auth.currentUser, {
           displayName: newDisplayName || auth.currentUser.displayName,
-          photoURL: newPhotoURL || auth.currentUser.photoURL,
         })
           .then(() => {
             setUser(auth.currentUser);
+            addUserToStore(db, "users", user.uid, user);
             console.log("Kullanıcı profil bilgileri güncellendi");
             // Inputları temizle
             setNewDisplayName("");
-            setNewPhotoURL("");
           })
           .catch((error) => {
             console.error(
@@ -60,6 +108,7 @@ const Profile = () => {
       verifyBeforeUpdateEmail(auth.currentUser, newEmail)
         .then(() => {
           alert("Doğrulama e-postası gönderildi");
+          addUserToStore(db, "users", user.uid, user);
           // Inputları temizle
           setNewEmail("");
         })
@@ -94,6 +143,10 @@ const Profile = () => {
       return false;
     }
     return true;
+  };
+
+  const toggleFileInput = () => {
+    setIsVisible((prev) => !prev);
   };
 
   return (
@@ -135,11 +188,13 @@ const Profile = () => {
                   borderRadius: "50%",
                   objectFit: "cover",
                 }}
+                //burda logic lazım eğer storage da var sa o yüklenecek yoksa orjinali
                 src={newPhotoURL ? newPhotoURL : user?.photoURL}
                 alt={user?.email}
               />
 
               <div
+                onClick={toggleFileInput}
                 style={{
                   backgroundColor: "#F4D160",
                   width: "3vw",
@@ -161,6 +216,42 @@ const Profile = () => {
                   alt={Camera}
                 ></img>
               </div>
+              {isVisible && (
+                <div style={{ width: "50%", margin: "auto" }}>
+                  <p className={classes.leftAlign}>Photo</p>
+
+                  <div
+                    style={{
+                      position: "relative",
+                      width: "100%",
+                      paddingBottom: "15%",
+                    }}
+                  >
+                    <input
+                      style={{
+                        border: "solid",
+                        borderColor: "#ccc",
+                        borderWidth: "2px",
+                        display: "inline-block",
+                        cursor: "pointer",
+                      }}
+                      type="file"
+                      onChange={(e) => setFile(e.target.files[0])}
+                    ></input>
+                    <button
+                      style={{
+                        position: "absolute",
+                        bottom: 0,
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                      }}
+                      onClick={uploadPhoto}
+                    >
+                      Upload Img
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <form className={classes.form} onSubmit={(e) => e.preventDefault()}>
@@ -170,13 +261,6 @@ const Profile = () => {
               placeholder="Display Name"
               value={newDisplayName}
               onChange={(e) => setNewDisplayName(e.target.value)}
-            />
-            <p className={classes.leftAlign}>Photo URL</p>
-            <input
-              type="text"
-              placeholder="Photo URL"
-              value={newPhotoURL}
-              onChange={(e) => setNewPhotoURL(e.target.value)}
             />
             <button
               className={classes.loginBtn}

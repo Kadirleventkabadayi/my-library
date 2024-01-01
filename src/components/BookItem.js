@@ -1,6 +1,6 @@
 import classes from "./bookItem.module.css";
 import { addToAReadListHandler } from "../utils/AddToAReadList";
-import { db } from "../config/FireBase";
+import { auth, db } from "../config/FireBase";
 import Comment from "./Comment";
 import AlreadyRead from "../assets/AlreadyRead.svg";
 import AlreadyReadHover from "../assets/AlreadyReadHover.svg";
@@ -12,11 +12,32 @@ import { useUser } from "./UserContex";
 import { useEffect, useState } from "react";
 import { addCommentHandler } from "../utils/AddComment";
 import { getComments } from "../utils/GetComments";
+import { getDoc, doc } from "firebase/firestore";
+
 function BookItem({ book, selfLink, id }) {
   const { user } = useUser();
   const { title, authors, publishedDate, description, imageLinks } = book;
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState([]);
+  const [hoverResults, setHoverResults] = useState([]);
+
+  const hoverEffect = async (collectionPath, docId) => {
+    const user = auth.currentUser;
+    if (user && user.uid) {
+      try {
+        const docRef = doc(db, collectionPath, docId);
+        const docSnap = await getDoc(docRef);
+        const data = docSnap.data();
+        if (data.hasOwnProperty(book.title)) {
+          return true;
+        }
+        return false;
+      } catch (error) {
+        console.error("Kontrol yapılırken hata oluştu:", error);
+      }
+    }
+    return false;
+  };
 
   const checkUser = (user) => {
     return user !== null
@@ -41,6 +62,20 @@ function BookItem({ book, selfLink, id }) {
       setComments(commentsFromFirestore);
     };
     fetchComments();
+
+    const fetchHoverResults = async () => {
+      const pathsToCheck = [
+        "alreadyReadBooks",
+        "willReadBooks",
+        "favoriteBooks",
+      ];
+      const results = await Promise.all(
+        pathsToCheck.map((path) => hoverEffect(path, user.uid))
+      );
+      setHoverResults(results);
+      console.log(results);
+    };
+    fetchHoverResults();
   }, [id]);
 
   const handleSubmit = async (e) => {
@@ -56,6 +91,19 @@ function BookItem({ book, selfLink, id }) {
       alert("Plase Sign in!");
     }
     setCommentText(""); // Form gönderildikten sonra metni sıfırla
+  };
+  const handleAddToReadList = async (collectionPath, index) => {
+    if (user) {
+      addToAReadListHandler(db, collectionPath, user.uid, book, title);
+      // Update hoverResults to set the clicked index to true
+      setHoverResults((prevResults) => {
+        const newResults = [...prevResults];
+        newResults[index] = true;
+        return newResults;
+      });
+    } else {
+      alert("Please Sign In!");
+    }
   };
 
   return (
@@ -74,7 +122,7 @@ function BookItem({ book, selfLink, id }) {
           </div>
           <div className={classes.book}>
             <h2 className={classes.BookTitle}>
-              {title}{" "}
+              {title}
               <p className={classes.BookInfo}>
                 {publishedDate ? `(${publishedDate})` : ""}
               </p>
@@ -88,67 +136,61 @@ function BookItem({ book, selfLink, id }) {
             />
             <div className={classes.addlist}>
               <h4
-                onClick={() =>
-                  user
-                    ? addToAReadListHandler(
-                        db,
-                        "alreadyReadBooks",
-                        user.uid,
-                        book,
-                        title
-                      )
-                    : alert("Plase Sign İn!")
+                style={
+                  hoverResults[0]
+                    ? { color: "#1d5d9b", borderColor: "#1d5d9b" }
+                    : {}
                 }
+                onClick={() => handleAddToReadList("alreadyReadBooks", 0)}
               >
                 <img
-                  src={AlreadyRead}
+                  src={hoverResults[0] ? AlreadyReadHover : AlreadyRead}
                   alt="Already Read"
                   className={classes.icon}
                 />
                 <img
-                  src={AlreadyReadHover}
+                  src={hoverResults[0] ? AlreadyRead : AlreadyReadHover}
                   alt="Already Read Hover"
                   className={classes.hoverIcon}
                 />
                 Already Read
               </h4>
               <h4
-                onClick={() =>
-                  user
-                    ? addToAReadListHandler(
-                        db,
-                        "willReadBooks",
-                        user.uid,
-                        book,
-                        title
-                      )
-                    : alert("Plase Sign İn!")
+                style={
+                  hoverResults[1]
+                    ? { color: "#1d5d9b", borderColor: "#1d5d9b" }
+                    : {}
                 }
+                onClick={() => handleAddToReadList("willReadBooks", 1)}
               >
-                <img src={WillRead} alt="Will Read" className={classes.icon} />
                 <img
-                  src={WillReadHover}
+                  src={hoverResults[1] ? WillReadHover : WillRead}
+                  alt="Will Read"
+                  className={classes.icon}
+                />
+                <img
+                  src={hoverResults[1] ? WillRead : WillReadHover}
                   alt="Will Read Hover"
                   className={classes.hoverIcon}
                 />
                 Will Read
               </h4>
+
               <h4
-                onClick={() =>
-                  user
-                    ? addToAReadListHandler(
-                        db,
-                        "favoriteBooks",
-                        user.uid,
-                        book,
-                        title
-                      )
-                    : alert("Plase Sign İn!")
+                style={
+                  hoverResults[2]
+                    ? { color: "#1d5d9b", borderColor: "#1d5d9b" }
+                    : {}
                 }
+                onClick={() => handleAddToReadList("favoriteBooks", 2)}
               >
-                <img src={Favorite} alt="Favorite" className={classes.icon} />
                 <img
-                  src={FavoriteHover}
+                  src={hoverResults[2] ? FavoriteHover : Favorite}
+                  alt="Favorite"
+                  className={classes.icon}
+                />
+                <img
+                  src={hoverResults[2] ? Favorite : FavoriteHover}
                   alt="Favorite Hover"
                   className={classes.hoverIcon}
                 />

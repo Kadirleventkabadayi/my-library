@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB6SQfAXyTOMgjPs09ruxR2xZ_5JhVXHGM",
@@ -20,6 +21,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+
+export const storage = getStorage(app);
 
 export const register = async (email, password) => {
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
